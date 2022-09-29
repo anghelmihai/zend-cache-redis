@@ -263,7 +263,7 @@ class Extended_Cache_Backend_Redis extends Zend_Cache_Backend implements Zend_Ca
      */
     protected function _keyFromId($id)
     {
-        return $this->_options['key_prefix'] . 'item__' . $id;
+        return '{' . $this->_options['key_prefix'] . '}' . 'item__' . $id;
     }
 
     /**
@@ -274,7 +274,7 @@ class Extended_Cache_Backend_Redis extends Zend_Cache_Backend implements Zend_Ca
      */
     protected function _keyFromTag($id)
     {
-        return $this->_options['key_prefix'] . 'tag__' . $id;
+        return '{' . $this->_options['key_prefix'] . '}' . 'tag__' . $id;
     }
 
     /**
@@ -285,7 +285,7 @@ class Extended_Cache_Backend_Redis extends Zend_Cache_Backend implements Zend_Ca
      */
     protected function _keyFromItemTags($id)
     {
-        return $this->_options['key_prefix'] . 'item_tags__' . $id;
+        return '{' . $this->_options['key_prefix'] . '}' . 'item_tags__' . $id;
     }
 
     /**
