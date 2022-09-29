@@ -87,36 +87,8 @@ class Extended_Cache_Backend_Redis extends Zend_Cache_Backend implements Zend_Ca
             Zend_Cache::throwException('The redis extension must be loaded for using this backend !');
         }
         parent::__construct($options);
-        $this->_redis = new Redis;
 
-        foreach ($this->_options['servers'] as $server) {
-            if (!array_key_exists('port', $server)) {
-                $server['port'] = self::DEFAULT_PORT;
-            }
-            if (!array_key_exists('host', $server)) {
-                $server['host'] = self::DEFAULT_HOST;
-            }
-            if (!array_key_exists('persistent', $server)) {
-                $server['persistent'] = self::DEFAULT_PERSISTENT;
-            }
-            if (!array_key_exists('dbindex', $server)) {
-                $server['dbindex'] = self::DEFAULT_DBINDEX;
-            }
-            if ($server['persistent']) {
-                $result = $this->_redis->pconnect($server['host'], $server['port'], null, "dbindex_{$server['dbindex']}");
-            } else {
-                $result = $this->_redis->connect($server['host'], $server['port']);
-            }
-
-            if ($this->_redis && array_key_exists('auth', $server) && $server['auth']) {
-                $this->_redis->auth($server['password']);
-            }
-
-            if ($result)
-                $this->_redis->select($server['dbindex']);
-            else
-                $this->_redis = null;
-        }
+        $this->_redis = Zend_Registry::get('redis');
     }
 
     /**
